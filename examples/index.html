@@ -1,0 +1,66 @@
+<html>
+	<head>
+		<title>Scrambled-eggs examples</title>
+		<meta charset="utf-8">
+		<script src="../dist/scrambled-eggs.js"></script>
+		<style>
+			.target {
+				display: inline-block;
+				vertical-align: top;
+				margin: 55px;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Scrambled-eggs examples</h1>
+		<div id="targets" />
+		<script>
+			var targets = null
+			var options = [
+				{ text: 'https://trevor.smith.name/' },
+				{
+					text: 'https://potassiumes.org/',
+					useSVG: true
+				}
+			]
+			function addBarcode(options){
+				let target = document.createElement('div')
+				target.setAttribute('class', 'target')
+				targets.appendChild(target)
+				return new MatrixBarcode(target, options)
+			}
+
+			function init(){
+				targets = document.getElementById('targets')
+				options.forEach(option => { addBarcode(Object.assign({
+					width: 500, height: 500
+				}, option)) })
+
+				let barcode1 = addBarcode({
+					width: 500, height: 500
+				})
+				barcode1.makeCode('Foo')
+
+				let barcode2 = addBarcode({
+					width: 500, height: 500,
+					useSVG: true
+				})
+				barcode2.makeCode('Bar')
+
+				addBarcode({
+					width: 500, height: 500,
+					text: longText
+				})
+
+				addBarcode({
+					width: 500, height: 500,
+					text: longText,
+					useSVG: true
+				})
+			}
+			document.addEventListener('DOMContentLoaded', init)
+
+			let longText = `This is a long text that you might like to read. This is a long text that you might like to read. This is a long text that you might like to read. This is a long text that you might like to read. This is a long text that you might like to read. This is a long text that you might like to read. This is a long text that you might like to read. This is a long text that you might like to read. This is a long text that you might like to read. This is a long text that you might like to read. This is a long text that you might like to read. This is a long text that you might like to read. This is a long text that you might like to read. This is a long text that you might like to read. This is a long text that you might like to read. This is a long text that you might like to read. This is a long text that you might like to read. This is a long text that you might like to read. This is a long text that you might like to read. This is a long text that you might like to read. This is a long text that you might like to read. This is a long text that you might like to read. This is a long text that you might like to read.`
+		</script>
+	</body>
+</html>
