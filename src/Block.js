@@ -7,17 +7,17 @@ class Block {
 	}
 
 	static getBlocks(typeNumber, errorCorrectLevel) {
-		var rsBlock = Block.getBlockTable(typeNumber, errorCorrectLevel)
+		const rsBlock = Block.getBlockTable(typeNumber, errorCorrectLevel)
 		if (rsBlock == undefined) {
 			throw new Error("bad rs block @ typeNumber:" + typeNumber + "/errorCorrectLevel:" + errorCorrectLevel)
 		}
-		var length = rsBlock.length / 3
-		var list = []
-		for (var i = 0; i < length; i++) {
-			var count = rsBlock[i * 3 + 0]
-			var totalCount = rsBlock[i * 3 + 1]
-			var dataCount = rsBlock[i * 3 + 2]
-			for (var j = 0; j < count; j++) {
+		const length = rsBlock.length / 3
+		const list = []
+		for (let i = 0; i < length; i++) {
+			const count = rsBlock[i * 3 + 0]
+			const totalCount = rsBlock[i * 3 + 1]
+			const dataCount = rsBlock[i * 3 + 2]
+			for (let j = 0; j < count; j++) {
 				list.push(new Block(totalCount, dataCount))
 			}
 		}

@@ -15,7 +15,7 @@ class Model {
 	}
 
 	addData(data) {
-		var newData = new Matrix8BitByte(data)
+		const newData = new Matrix8BitByte(data)
 		this.dataList.push(newData)
 		this.dataCache = null
 	}
@@ -38,9 +38,9 @@ class Model {
 	makeImpl(test, maskPattern) {
 		this.moduleCount = this.typeNumber * 4 + 17
 		this.modules = new Array(this.moduleCount)
-		for (var row = 0; row < this.moduleCount; row++) {
+		for (let row = 0; row < this.moduleCount; row++) {
 			this.modules[row] = new Array(this.moduleCount)
-			for (var col = 0; col < this.moduleCount; col++) {
+			for (let col = 0; col < this.moduleCount; col++) {
 				this.modules[row][col] = null
 			}
 		}
@@ -60,9 +60,9 @@ class Model {
 	}
 
 	setupPositionProbePattern(row, col) {
-		for (var r = -1; r <= 7; r++) {
+		for (let r = -1; r <= 7; r++) {
 			if (row + r <= -1 || this.moduleCount <= row + r) continue
-			for (var c = -1; c <= 7; c++) {
+			for (let c = -1; c <= 7; c++) {
 				if (col + c <= -1 || this.moduleCount <= col + c) continue
 				if (
 					(0 <= r && r <= 6 && (c == 0 || c == 6)) ||
@@ -78,11 +78,11 @@ class Model {
 	}
 
 	getBestMaskPattern() {
-		var minLostPoint = 0
-		var pattern = 0
-		for (var i = 0; i < 8; i++) {
+		let minLostPoint = 0
+		let pattern = 0
+		for (let i = 0; i < 8; i++) {
 			this.makeImpl(true, i)
-			var lostPoint = QRUtil.getLostPoint(this)
+			const lostPoint = QRUtil.getLostPoint(this)
 			if (i == 0 || minLostPoint > lostPoint) {
 				minLostPoint = lostPoint
 				pattern = i
@@ -92,14 +92,14 @@ class Model {
 	}
 
 	createMovieClip(target_mc, instance_name, depth) {
-		var qr_mc = target_mc.createEmptyMovieClip(instance_name, depth)
-		var cs = 1
+		const qr_mc = target_mc.createEmptyMovieClip(instance_name, depth)
+		const cs = 1
 		this.make()
-		for (var row = 0; row < this.modules.length; row++) {
-			var y = row * cs
-			for (var col = 0; col < this.modules[row].length; col++) {
-				var x = col * cs
-				var dark = this.modules[row][col]
+		for (let row = 0; row < this.modules.length; row++) {
+			const y = row * cs
+			for (let col = 0; col < this.modules[row].length; col++) {
+				const x = col * cs
+				const dark = this.modules[row][col]
 				if (dark) {
 					qr_mc.beginFill(0, 100)
 					qr_mc.moveTo(x, y)
@@ -114,13 +114,13 @@ class Model {
 	}
 
 	setupTimingPattern() {
-		for (var r = 8; r < this.moduleCount - 8; r++) {
+		for (let r = 8; r < this.moduleCount - 8; r++) {
 			if (this.modules[r][6] != null) {
 				continue
 			}
 			this.modules[r][6] = r % 2 == 0
 		}
-		for (var c = 8; c < this.moduleCount - 8; c++) {
+		for (let c = 8; c < this.moduleCount - 8; c++) {
 			if (this.modules[6][c] != null) {
 				continue
 			}
@@ -129,16 +129,16 @@ class Model {
 	}
 
 	setupPositionAdjustPattern() {
-		var pos = QRUtil.getPatternPosition(this.typeNumber)
-		for (var i = 0; i < pos.length; i++) {
-			for (var j = 0; j < pos.length; j++) {
-				var row = pos[i]
-				var col = pos[j]
+		const pos = QRUtil.getPatternPosition(this.typeNumber)
+		for (let i = 0; i < pos.length; i++) {
+			for (let j = 0; j < pos.length; j++) {
+				const row = pos[i]
+				const col = pos[j]
 				if (this.modules[row][col] != null) {
 					continue
 				}
-				for (var r = -2; r <= 2; r++) {
-					for (var c = -2; c <= 2; c++) {
+				for (let r = -2; r <= 2; r++) {
+					for (let c = -2; c <= 2; c++) {
 						if (r == -2 || r == 2 || c == -2 || c == 2 || (r == 0 && c == 0)) {
 							this.modules[row + r][col + c] = true
 						} else {
@@ -151,22 +151,22 @@ class Model {
 	}
 
 	setupTypeNumber(test) {
-		var bits = QRUtil.getBCHTypeNumber(this.typeNumber)
-		for (var i = 0; i < 18; i++) {
-			var mod = !test && ((bits >> i) & 1) == 1
+		const bits = QRUtil.getBCHTypeNumber(this.typeNumber)
+		for (let i = 0; i < 18; i++) {
+			const mod = !test && ((bits >> i) & 1) == 1
 			this.modules[Math.floor(i / 3)][(i % 3) + this.moduleCount - 8 - 3] = mod
 		}
-		for (var i = 0; i < 18; i++) {
-			var mod = !test && ((bits >> i) & 1) == 1
+		for (let i = 0; i < 18; i++) {
+			const mod = !test && ((bits >> i) & 1) == 1
 			this.modules[(i % 3) + this.moduleCount - 8 - 3][Math.floor(i / 3)] = mod
 		}
 	}
 
 	setupTypeInfo(test, maskPattern) {
-		var data = (this.errorCorrectLevel << 3) | maskPattern
-		var bits = QRUtil.getBCHTypeInfo(data)
-		for (var i = 0; i < 15; i++) {
-			var mod = !test && ((bits >> i) & 1) == 1
+		const data = (this.errorCorrectLevel << 3) | maskPattern
+		const bits = QRUtil.getBCHTypeInfo(data)
+		for (let i = 0; i < 15; i++) {
+			const mod = !test && ((bits >> i) & 1) == 1
 			if (i < 6) {
 				this.modules[i][8] = mod
 			} else if (i < 8) {
@@ -175,8 +175,8 @@ class Model {
 				this.modules[this.moduleCount - 15 + i][8] = mod
 			}
 		}
-		for (var i = 0; i < 15; i++) {
-			var mod = !test && ((bits >> i) & 1) == 1
+		for (let i = 0; i < 15; i++) {
+			const mod = !test && ((bits >> i) & 1) == 1
 			if (i < 8) {
 				this.modules[8][this.moduleCount - i - 1] = mod
 			} else if (i < 9) {
@@ -189,20 +189,20 @@ class Model {
 	}
 
 	mapData(data, maskPattern) {
-		var inc = -1
-		var row = this.moduleCount - 1
-		var bitIndex = 7
-		var byteIndex = 0
-		for (var col = this.moduleCount - 1; col > 0; col -= 2) {
+		let inc = -1
+		let row = this.moduleCount - 1
+		let bitIndex = 7
+		let byteIndex = 0
+		for (let col = this.moduleCount - 1; col > 0; col -= 2) {
 			if (col == 6) col--
 			while (true) {
-				for (var c = 0; c < 2; c++) {
+				for (let c = 0; c < 2; c++) {
 					if (this.modules[row][col - c] == null) {
-						var dark = false
+						let dark = false
 						if (byteIndex < data.length) {
 							dark = ((data[byteIndex] >>> bitIndex) & 1) == 1
 						}
-						var mask = QRUtil.getMask(maskPattern, row, col - c)
+						const mask = QRUtil.getMask(maskPattern, row, col - c)
 						if (mask) {
 							dark = !dark
 						}
@@ -225,16 +225,16 @@ class Model {
 	}
 
 	static createData(typeNumber, errorCorrectLevel, dataList) {
-		var rsBlocks = Block.getBlocks(typeNumber, errorCorrectLevel)
-		var buffer = new BitBuffer()
-		for (var i = 0; i < dataList.length; i++) {
-			var data = dataList[i]
+		const rsBlocks = Block.getBlocks(typeNumber, errorCorrectLevel)
+		const buffer = new BitBuffer()
+		for (let i = 0; i < dataList.length; i++) {
+			const data = dataList[i]
 			buffer.put(data.mode, 4)
 			buffer.put(data.getLength(), QRUtil.getLengthInBits(data.mode, typeNumber))
 			data.write(buffer)
 		}
-		var totalDataCount = 0
-		for (var i = 0; i < rsBlocks.length; i++) {
+		let totalDataCount = 0
+		for (let i = 0; i < rsBlocks.length; i++) {
 			totalDataCount += rsBlocks[i].dataCount
 		}
 		if (buffer.getLengthInBits() > totalDataCount * 8) {
@@ -260,45 +260,45 @@ class Model {
 	}
 
 	static createBytes(buffer, rsBlocks) {
-		var offset = 0
-		var maxDcCount = 0
-		var maxEcCount = 0
-		var dcdata = new Array(rsBlocks.length)
-		var ecdata = new Array(rsBlocks.length)
-		for (var r = 0; r < rsBlocks.length; r++) {
-			var dcCount = rsBlocks[r].dataCount
-			var ecCount = rsBlocks[r].totalCount - dcCount
+		let offset = 0
+		let maxDcCount = 0
+		let maxEcCount = 0
+		const dcdata = new Array(rsBlocks.length)
+		const ecdata = new Array(rsBlocks.length)
+		for (let r = 0; r < rsBlocks.length; r++) {
+			const dcCount = rsBlocks[r].dataCount
+			const ecCount = rsBlocks[r].totalCount - dcCount
 			maxDcCount = Math.max(maxDcCount, dcCount)
 			maxEcCount = Math.max(maxEcCount, ecCount)
 			dcdata[r] = new Array(dcCount)
-			for (var i = 0; i < dcdata[r].length; i++) {
+			for (let i = 0; i < dcdata[r].length; i++) {
 				dcdata[r][i] = 0xff & buffer.buffer[i + offset]
 			}
 			offset += dcCount
-			var rsPoly = QRUtil.getErrorCorrectPolynomial(ecCount)
-			var rawPoly = new Polynomial(dcdata[r], rsPoly.getLength() - 1)
-			var modPoly = rawPoly.mod(rsPoly)
+			const rsPoly = QRUtil.getErrorCorrectPolynomial(ecCount)
+			const rawPoly = new Polynomial(dcdata[r], rsPoly.getLength() - 1)
+			const modPoly = rawPoly.mod(rsPoly)
 			ecdata[r] = new Array(rsPoly.getLength() - 1)
-			for (var i = 0; i < ecdata[r].length; i++) {
-				var modIndex = i + modPoly.getLength() - ecdata[r].length
+			for (let i = 0; i < ecdata[r].length; i++) {
+				const modIndex = i + modPoly.getLength() - ecdata[r].length
 				ecdata[r][i] = modIndex >= 0 ? modPoly.get(modIndex) : 0
 			}
 		}
-		var totalCodeCount = 0
-		for (var i = 0; i < rsBlocks.length; i++) {
+		let totalCodeCount = 0
+		for (let i = 0; i < rsBlocks.length; i++) {
 			totalCodeCount += rsBlocks[i].totalCount
 		}
-		var data = new Array(totalCodeCount)
-		var index = 0
-		for (var i = 0; i < maxDcCount; i++) {
-			for (var r = 0; r < rsBlocks.length; r++) {
+		const data = new Array(totalCodeCount)
+		let index = 0
+		for (let i = 0; i < maxDcCount; i++) {
+			for (let r = 0; r < rsBlocks.length; r++) {
 				if (i < dcdata[r].length) {
 					data[index++] = dcdata[r][i]
 				}
 			}
 		}
-		for (var i = 0; i < maxEcCount; i++) {
-			for (var r = 0; r < rsBlocks.length; r++) {
+		for (let i = 0; i < maxEcCount; i++) {
+			for (let r = 0; r < rsBlocks.length; r++) {
 				if (i < ecdata[r].length) {
 					data[index++] = ecdata[r][i]
 				}

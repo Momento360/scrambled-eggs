@@ -5,15 +5,15 @@ class SVGDrawing {
 	}
 
 	draw(oMatrixBarcode) {
-		var _htOption = this._htOption
-		var _el = this._el
-		var nCount = oMatrixBarcode.getModuleCount()
-		var nWidth = Math.floor(_htOption.width / nCount)
-		var nHeight = Math.floor(_htOption.height / nCount)
+		const _htOption = this._htOption
+		const _el = this._el
+		const nCount = oMatrixBarcode.getModuleCount()
+		const nWidth = Math.floor(_htOption.width / nCount)
+		const nHeight = Math.floor(_htOption.height / nCount)
 
 		this.clear()
 
-		var svg = makeSVG("svg", {
+		const svg = makeSVG("svg", {
 			viewBox: "0 0 " + String(nCount) + " " + String(nCount),
 			width: this._htOption.width,
 			height: this._htOption.height,
@@ -38,10 +38,10 @@ class SVGDrawing {
 			})
 		)
 
-		for (var row = 0; row < nCount; row++) {
-			for (var col = 0; col < nCount; col++) {
+		for (let row = 0; row < nCount; row++) {
+			for (let col = 0; col < nCount; col++) {
 				if (oMatrixBarcode.isDark(row, col)) {
-					var child = makeSVG("use", {
+					const child = makeSVG("use", {
 						x: String(col),
 						y: String(row)
 					})
@@ -62,8 +62,8 @@ class SVGDrawing {
 }
 
 function makeSVG(tag, attrs) {
-	var el = document.createElementNS("http://www.w3.org/2000/svg", tag)
-	for (var k in attrs) if (attrs.hasOwnProperty(k)) el.setAttribute(k, attrs[k])
+	const el = document.createElementNS("http://www.w3.org/2000/svg", tag)
+	for (const k in attrs) if (attrs.hasOwnProperty(k)) el.setAttribute(k, attrs[k])
 	return el
 }
 

@@ -33,7 +33,7 @@ class MatrixBarcode {
 
 		// Overwrites options
 		if (vOption) {
-			for (var i in vOption) {
+			for (const i in vOption) {
 				this._htOption[i] = vOption[i]
 			}
 		}
@@ -83,13 +83,13 @@ class MatrixBarcode {
 MatrixBarcode.CorrectLevel = QRErrorCorrectLevel
 
 function _getUTF8Length(sText) {
-	var replacedText = encodeURI(sText)
+	const replacedText = encodeURI(sText)
 		.toString()
 		.replace(/\%[0-9a-fA-F]{2}/g, "a")
 	return replacedText.length + (replacedText.length != sText ? 3 : 0)
 }
 
-var MatrixBarcodeLimitLength = [
+const MatrixBarcodeLimitLength = [
 	[17, 14, 11, 7],
 	[32, 26, 20, 14],
 	[53, 42, 32, 24],
@@ -145,11 +145,11 @@ function _isSupportCanvas() {
  * @return {Number} type
  */
 function _getTypeNumber(sText, nCorrectLevel) {
-	var nType = 1
-	var length = _getUTF8Length(sText)
+	let nType = 1
+	const length = _getUTF8Length(sText)
 
-	for (var i = 0, len = MatrixBarcodeLimitLength.length; i < len; i++) {
-		var nLimit = 0
+	for (let i = 0, len = MatrixBarcodeLimitLength.length; i < len; i++) {
+		let nLimit = 0
 
 		switch (nCorrectLevel) {
 			case QRErrorCorrectLevel.L:

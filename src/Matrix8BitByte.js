@@ -7,9 +7,9 @@ class Matrix8BitByte {
 		this.parsedData = []
 
 		// Added to support UTF-8 Characters
-		for (var i = 0, l = this.data.length; i < l; i++) {
-			var byteArray = []
-			var code = this.data.charCodeAt(i)
+		for (let i = 0, l = this.data.length; i < l; i++) {
+			const byteArray = []
+			const code = this.data.charCodeAt(i)
 
 			if (code > 0x10000) {
 				byteArray[0] = 0xf0 | ((code & 0x1c0000) >>> 18)
@@ -44,7 +44,7 @@ class Matrix8BitByte {
 	}
 
 	write(buffer) {
-		for (var i = 0, l = this.parsedData.length; i < l; i++) {
+		for (let i = 0, l = this.parsedData.length; i < l; i++) {
 			buffer.put(this.parsedData[i], 8)
 		}
 	}

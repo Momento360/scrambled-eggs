@@ -10,17 +10,17 @@ class TableDrawing {
 	 * @param {QRCode} oQRCode
 	 */
 	draw(oQRCode) {
-		var _htOption = this._htOption
-		var _el = this._el
-		var nCount = oQRCode.getModuleCount()
-		var nWidth = Math.floor(_htOption.width / nCount)
-		var nHeight = Math.floor(_htOption.height / nCount)
-		var aHTML = ['<table style="border:0; border-collapse:collapse; ">']
+		const _htOption = this._htOption
+		const _el = this._el
+		const nCount = oQRCode.getModuleCount()
+		const nWidth = Math.floor(_htOption.width / nCount)
+		const nHeight = Math.floor(_htOption.height / nCount)
+		const aHTML = ['<table style="border:0; border-collapse:collapse; ">']
 
-		for (var row = 0; row < nCount; row++) {
+		for (let row = 0; row < nCount; row++) {
 			aHTML.push("<tr>")
 
-			for (var col = 0; col < nCount; col++) {
+			for (let col = 0; col < nCount; col++) {
 				aHTML.push(
 					'<td style="border:0; border-collapse:collapse; padding:0; margin:0; width:' +
 						nWidth +
@@ -39,9 +39,9 @@ class TableDrawing {
 		_el.innerHTML = aHTML.join("")
 
 		// Fix the margin values as real size.
-		var elTable = _el.childNodes[0]
-		var nLeftMarginTable = (_htOption.width - elTable.offsetWidth) / 2
-		var nTopMarginTable = (_htOption.height - elTable.offsetHeight) / 2
+		const elTable = _el.childNodes[0]
+		const nLeftMarginTable = (_htOption.width - elTable.offsetWidth) / 2
+		const nTopMarginTable = (_htOption.height - elTable.offsetHeight) / 2
 
 		if (nLeftMarginTable > 0 && nTopMarginTable > 0) {
 			elTable.style.margin = nTopMarginTable + "px " + nLeftMarginTable + "px"
