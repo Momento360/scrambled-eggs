@@ -15,8 +15,11 @@
 		<h1>Scrambled-eggs examples</h1>
 		<div id="targets" />
 		<script>
+			let longURL = `https://trevor.smith.name/?scrambled-eggs=0011abc12323e3704daabe00869dccf99350&utm_campaign=hothead&heading=23&pitch=4.444333&field-of-view=75&utm_source=blobieton&nbclid=EEER22IgAAAsg4zBBBu6piEn14cjKUKzx3jJgcyvmmLfBObgpIYQ0BfyCl123&moon=wefjhkfiuhsGLKWRlKjblwrufahweiruh23orqu3hr432084uwofbnWKcb24983t143947t1liyvbwelhvcbalriety0q3485yu2034u0139u5yi234ubt3948yt98q43y594outh&goop=239874237r9whfkjwbnfvweg`
+
 			var targets = null
 			var options = [
+				{ text: longURL },
 				{ text: 'https://trevor.smith.name/' },
 				{
 					text: 'https://potassiumes.org/',
@@ -32,6 +35,7 @@
 
 			function init(){
 				targets = document.getElementById('targets')
+
 				options.forEach(option => { addBarcode(Object.assign({
 					width: 500, height: 500
 				}, option)) })

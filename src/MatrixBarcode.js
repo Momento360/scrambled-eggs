@@ -19,10 +19,9 @@ class MatrixBarcode {
 		this._htOption = {
 			width: 256,
 			height: 256,
-			typeNumber: 4,
 			colorDark: "#000000",
 			colorLight: "#ffffff",
-			correctLevel: QRErrorCorrectLevel.H
+			correctLevel: QRErrorCorrectLevel.L
 		}
 
 		if (typeof vOption === "string") {
@@ -164,6 +163,8 @@ function _getTypeNumber(sText, nCorrectLevel) {
 			case QRErrorCorrectLevel.H:
 				nLimit = MatrixBarcodeLimitLength[i][3]
 				break
+			default:
+				console.log('Unknown correct level', nCorrectLevel, sText)
 		}
 
 		if (length <= nLimit) {
