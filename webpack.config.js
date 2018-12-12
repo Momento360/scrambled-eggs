@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-	entry: './src/module.js',
+	entry: ['./src/module.js'],
 	output: {
 		filename: 'scrambled-eggs.js',
 		path: path.resolve(__dirname, 'dist')
@@ -10,21 +10,8 @@ module.exports = {
 		rules: [
 			{
 				test: /\.js$/,
-				include: [
-				],
-				use: {
-					loader: 'babel-loader',
-					options: {
-						presets: ['env'],
-						plugins: [
-							["transform-runtime", { polyfill: false }]
-						]
-					}
-				}
+				use: 'babel-loader'
 			}
 		]
-	},
-	resolve: {
-		extensions: ['.js']
 	}
 };
